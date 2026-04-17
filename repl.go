@@ -26,7 +26,13 @@ func startREPL(cfg *config) {
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
 		fmt.Print("Pokedex > ")
-		scanner.Scan()
+		if !scanner.Scan() {
+			if err := scanner.Err(); err != nil {
+				fmt.Println(err)
+			}
+			return
+		}
+
 		words := cleanInput(scanner.Text())
 		if len(words) == 0 {
 			continue

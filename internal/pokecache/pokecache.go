@@ -45,6 +45,7 @@ func (c *Cache) Get(key string) ([]byte, bool) {
 
 func (c *Cache) reapLoop(interval time.Duration) {
 	ticker := time.NewTicker(interval)
+	defer ticker.Stop()
 
 	for range ticker.C {
 		c.reap(time.Now().UTC(), interval)
